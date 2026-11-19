@@ -2,7 +2,7 @@
 #!/bin/bash
 
 # Separar as palavras, passar para minúsculas, retirar símbolos e eliminar repetidas
-tr ' ' '\n' < treino.txt | tr '\r' '\n' | tr '[:upper:]' '[:lower:]' | tr -d '[:punct:]«»' | grep -E '^[a-z]+$' | sort | uniq > palavras_limpas.txt
+tr ' ' '\n' < treino.txt | tr '\r' '\n' | tr '[:upper:]' '[:lower:]' | tr -d '[:punct:]«»' | grep '^[a-z][a-z]*$' | sort | uniq > palavras_limpas.txt
 
 # Criar o ficheiro para guardar os resultados
 > abreviaturas_contracao.txt

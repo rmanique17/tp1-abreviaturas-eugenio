@@ -2,8 +2,7 @@
 #!/bin/bash
 
 # Separar as palavras do ficheiro de teste, passar para minúsculas e retirar símbolos
-tr ' ' '\n' < teste.txt | tr '\r' '\n' | tr '[:upper:]' '[:lower:]' | tr -d '[:punct:]«»' | grep -E '^[a-z]+$' > palavras_teste.txt
-
+tr ' ' '\n' < teste.txt | tr '\r' '\n' | tr '[:upper:]' '[:lower:]' | tr -d '[:punct:]«»' | grep '^[a-z][a-z]*$' > palavras_teste.txt
 # Contar os caracteres do ficheiro original
 chars_orig=$(wc -m < teste.txt)
 
@@ -37,8 +36,8 @@ for dicionario in abreviaturas_contracao.txt abreviaturas_truncagem.txt abreviat
 
     chars_abrev=$((chars_orig - poupados))
 
-    # Calcular a percentagem de caracteres poupados
-    poupanca=$(awk "BEGIN {printf \"%.2f\", ($chars_orig - $chars_abrev) * 100 / $chars_orig}")
+    # Calcular a percentagem de caracteres poupados 
+poupanca=$(gawk "BEGIN {printf \"%.2f\", ($chars_orig - $chars_abrev) * 100 / $chars_orig}")
 
     echo "----------------------------------------"
     echo "Dicionário: $dicionario"
