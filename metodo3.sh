@@ -1,25 +1,25 @@
-
 #!/bin/bash
 
+# 1. Criar o ficheiro de saída
 > abreviaturas_metodo3.txt
 
-# Guardar as abreviaturas que já foram utilizadas
+# 2. Guardar as abreviaturas já utilizadas
 declare -A usadas
 
 while read palavra; do
     tamanho=${#palavra}
 
-    # Se a palavra tiver 3 letras ou menos, fica igual
+    # 3. Palavras com 3 letras ou menos ficam iguais
     if [ $tamanho -le 3 ]; then
         abreviatura="$palavra"
     else
-        # Juntar as duas primeiras letras com a última
+        # 4. Juntar as 2 primeiras letras com a última
         n=2
         inicio="${palavra:0:$n}"
         fim="${palavra: -1}"
         abreviatura="${inicio}${fim}"
 
-        # Se já existir, acrescentar mais uma letra ao início
+        # 5. Aumentar o início até a abreviatura ser única
         while [[ -n "${usadas[$abreviatura]}" ]] && [[ $n -lt $((tamanho - 1)) ]]; do
             n=$((n + 1))
             inicio="${palavra:0:$n}"
@@ -27,11 +27,12 @@ while read palavra; do
         done
     fi
 
-    # Guardar a abreviatura e escrever o resultado no ficheiro
+    # 6. Guardar a abreviatura no ficheiro
     usadas[$abreviatura]="sim"
     echo -e "$abreviatura\t$palavra" >> abreviaturas_metodo3.txt
 
 done < palavras_limpas.txt
 
 
+# 7. Mensagem de confirmação
 echo "Feito! Ficheiro abreviaturas_metodo3.txt gerado."

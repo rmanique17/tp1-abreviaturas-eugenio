@@ -1,22 +1,21 @@
-
 #!/bin/bash
 
-# Separar as palavras, passar para minúsculas, retirar símbolos e eliminar repetidas
+# 1. Limpar o texto, passar para minúsculas e eliminar palavras repetidas
 tr ' ' '\n' < treino.txt | tr '\r' '\n' | tr '[:upper:]' '[:lower:]' | tr -d '[:punct:]«»' | grep '^[a-z][a-z]*$' | sort | uniq > palavras_limpas.txt
 
-# Criar o ficheiro para guardar os resultados
+# 2. Criar o ficheiro de saída
 > abreviaturas_contracao.txt
 
-# Ler as palavras e retirar as vogais
+# 3. Ler as palavras e retirar as vogais
 while read palavra; do
-    # Retirar todas as vogais da palavra
+    # Retirar as vogais da palavra
     abreviatura=$(echo "$palavra" | tr -d 'aeiouáéíóúãõâê')
-    
-    # Só guardar se ainda tiver letras depois de retirar as vogais
+
+    # Guardar apenas se a abreviatura não ficar vazia
     if [ -n "$abreviatura" ]; then
         echo -e "$abreviatura\t$palavra" >> abreviaturas_contracao.txt
     fi
 done < palavras_limpas.txt
 
-# Mostrar uma mensagem quando terminar
+# 4. Mensagem de confirmação
 echo "Feito! Ficheiro abreviaturas_contracao.txt."
